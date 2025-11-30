@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 
-const persisted = localStorage.getItem("user");
+const persisted = localStorage.getItem("sc-user");
 const preloadedState = {
     user: {
         isLoggedIn: !!persisted,

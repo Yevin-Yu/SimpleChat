@@ -1,13 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "@/pages/login";
+import Home from "@/pages/home";
 
-const Home = () => {
-    return <h1>Home</h1>;
-};
-const About = () => {
-    return <h1>About</h1>;
-};
 export default function App() {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     // 未登录 跳转登录页
@@ -22,7 +17,6 @@ export default function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
             </Routes>
         </Router>
     );
