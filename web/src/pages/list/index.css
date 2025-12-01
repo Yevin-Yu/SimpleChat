@@ -59,3 +59,8 @@
 .list-content .simple-tag .id {
     font-size: 12px;
 }
+
+.list-content .simple-tag.no-chat {
+    display: flex;
+    justify-content: center
+}

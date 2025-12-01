@@ -1,11 +1,14 @@
 import { useRef, useEffect } from "react";
 // 是否登陆
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateChatList } from "../store/chatSlice";
+
 // 用户数据
 
 export function useWebSocket() {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const userData = useSelector((state) => state.user.userData);
+    const dispatch = useDispatch();
 
     const currentWs = useRef(null);
     useEffect(() => {
@@ -14,6 +17,10 @@ export function useWebSocket() {
             // 监听消息
             currentWs.current.onmessage = (event) => {
                 console.log("收到消息:", event.data);
+                const data = JSON.parse(event.data);
+                if (data.type === "chatList") { 
+                    dispatch(updateChatList(data.data.filter((item) => item.id !== userData.id)));
+                }
             };
             // 监听打开
             currentWs.current.onopen = () => {
@@ -23,7 +30,7 @@ export function useWebSocket() {
                         type: "join",
                         data: {
                             id: userData.id,
-                            username: userData.username,
+                            nickname: userData.nickname,
                         },
                     }),
                 );
