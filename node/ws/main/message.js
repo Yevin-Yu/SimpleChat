@@ -1,3 +1,6 @@
+const WebSocket = require("ws");
+const { sendCurrentUsers } = require("./send.js");
+
 function onMessage(ws, clients, message) {
     /**
      * 1. 如果 type 为 join 则加入当前连接的客户端，并且储存 客户端的 nickname id 等信息
@@ -15,22 +18,7 @@ function onMessage(ws, clients, message) {
         ws.nickname = nickname;
         ws.id = id;
 
-        // 广播当前所有连接的nickname id信息给所有连接的客户端
-        const userList = Array.from(clients).map((client) => ({
-            username: client.nickname,
-            id: client.id,
-        }));
-
-        clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(
-                    JSON.stringify({
-                        type: "userList",
-                        data: userList,
-                    }),
-                );
-            }
-        });
+        sendCurrentUsers(clients);
     }
 }
 
