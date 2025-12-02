@@ -1,24 +1,38 @@
 import "./index.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import List from "@/pages/list";
 import Chat from "@/pages/chat";
 
-export default function Home({ currentWs }) {
-    console.log(currentWs);
+export default function Home({ currentWs, isConnected }) {
+    const selectedChat = useSelector((state) => state.chat.selectedChat);
     const [isPhone, setIsPhone] = useState(window.innerWidth <= 768);
-    // 实时监听 窗口宽度变化
-    window.addEventListener("resize", () => {
-        setIsPhone(window.innerWidth <= 768);
-    });
 
+    // 使用useEffect监听窗口大小变化，并清理事件监听器
+    useEffect(() => {
+        const handleResize = () => {
+            setIsPhone(window.innerWidth <= 768);
+        };
+        window.addEventListener("resize", handleResize);
+        // 清理函数
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    // 渲染列表和聊天窗口
+    const shouldShowList = !isPhone || !selectedChat?.id;
+    const shouldShowChat = !isPhone || selectedChat?.id;
     return (
         <div className="home-page">
-            <div className={isPhone ? "home-left home-left-phone" : "home-left"}>
-                <List currentWs={currentWs} />
-            </div>
-            {!isPhone && (
+            {shouldShowList && (
+                <div className={isPhone ? "home-left home-left-phone" : "home-left"}>
+                    <List currentWs={currentWs} isConnected={isConnected} />
+                </div>
+            )}
+            {shouldShowChat && (
                 <div className="home-right">
-                    <Chat currentWs={currentWs} />
+                    <Chat currentWs={currentWs} isConnected={isConnected} />
                 </div>
             )}
         </div>

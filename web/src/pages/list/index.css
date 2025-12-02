@@ -23,13 +23,20 @@
     vertical-align: middle;
     border-radius: 50%;
 }
+
 .list-header span {
-    padding-left: 16px;
+    padding-left: 14px;
     font-size: 16px;
     color: var(--default-color);
     line-height: 50px;
     vertical-align: middle;
 }
+
+.list-header .nickname,
+.list-header .ws-status {
+    color: var(--theme-color-text);
+}
+
 .list-content {
     height: calc(100% - 50px);
     padding: 0 16px;
@@ -37,16 +44,20 @@
     overflow-y: auto;
     scrollbar-width: none;
 }
+
 .list-content .simple-tag {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
     border-radius: 4px;
 }
-.list-content .simple-tag:hover {
+
+.list-content .simple-tag:hover,
+.list-content .simple-tag.selected {
     color: var(--sh-button-color);
     background-color: var(--sh-button-bg-color);
 }
+
 .list-content .simple-tag img {
     width: 42px;
     height: 42px;
