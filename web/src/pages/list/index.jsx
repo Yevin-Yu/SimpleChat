@@ -14,7 +14,7 @@ export default function List({ currentWs }) {
                 <SimpleTag className="no-chat" size="medium">
                     暂无在线用户
                 </SimpleTag>
-            )
+            );
         }
         return chatList.map((item) => (
             <SimpleTag key={item.id} size="large">
@@ -29,18 +29,13 @@ export default function List({ currentWs }) {
 
     return (
         <div className="list-page">
-
             <h1 className="list-header">
                 <img src="/icon.png" alt="logo" />
                 <span>Simple Chat</span>
                 <span className="nickname">{userData?.nickname}</span>
-                <span className="ws-status">
-                    {currentWs.current ? "已连接" : "未连接"}
-                </span>
+                <span className="ws-status">{currentWs.current?.readyState === 1 ? "已连接🔗" : "未连接❌"}</span>
             </h1>
-            <div className="list-content">
-                {renderChatList()}
-            </div>
+            <div className="list-content">{renderChatList()}</div>
         </div>
     );
 }
