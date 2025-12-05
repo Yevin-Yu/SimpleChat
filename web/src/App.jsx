@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Login from "@/pages/login";
 import Home from "@/pages/home";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function App() {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -11,16 +12,22 @@ export default function App() {
     // 未登录 跳转登录页
     if (!isLoggedIn) {
         return (
-            <Router>
-                <Login />
-            </Router>
+            <>
+                <Router>
+                    <Login />
+                </Router>
+                <ThemeToggle />
+            </>
         );
     }
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home currentWs={currentWs} />} />
-            </Routes>
-        </Router>
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Home currentWs={currentWs} />} />
+                </Routes>
+            </Router>
+            <ThemeToggle />
+        </>
     );
 }

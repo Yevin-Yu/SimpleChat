@@ -18,3 +18,5 @@ wss.on("connection", (ws) => {
         onClose(ws, clients);
     });
 });
+
+console.log("WebSocket server started on port 8080");
